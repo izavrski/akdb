@@ -306,7 +306,7 @@ int * AK_get_allocation_set(int* bitsetbs, int fromWhere, int gaplength, int num
 * @brief  Function dumpes allocation table
 * @return nothing
 */
-void AK_allocationtable_dump(int zz){
+int AK_allocationtable_dump(int zz){
     int i;
     AK_PRO;
     printf("Dump of allocation table\n");
@@ -323,10 +323,15 @@ void AK_allocationtable_dump(int zz){
         }
     }
 
-
     printf("\n - - - - - -\n\n");
     AK_EPI;
+    
+	if(i==DB_FILE_BLOCKS_NUM)
+	return (EXIT_SUCCESS);
+	else 
+	exit(EXIT_ERROR);
 }
+
 
 
 /**
@@ -334,7 +339,7 @@ void AK_allocationtable_dump(int zz){
 * @brief  Function dumpes allocation table
 * @return nothing
 */
-void AK_blocktable_dump(int zz){
+int AK_blocktable_dump(int zz){
     int i;
     AK_PRO;
     printf("Dump of allocation table\n");
@@ -370,6 +375,11 @@ void AK_blocktable_dump(int zz){
 
     printf("\n - - - - - -\n\n");
     AK_EPI;
+
+	if(i==DB_FILE_BLOCKS_NUM)
+	return (EXIT_SUCCESS);
+	else 
+	 exit(EXIT_ERROR);
 }
 
 /**
@@ -2573,16 +2583,19 @@ int AK_init_disk_manager() {
     return EXIT_ERROR;
 }
 
+
 void AK_allocationbit_test() {
     AK_PRO;
-    AK_blocktable_dump(0);
+    
+    if(!(AK_blocktable_dump(0))) printf("Test succeeded!");
+    else printf("Test failed!");
     AK_EPI;
-
 }
 
 void AK_allocationtable_test() {
     AK_PRO;
-    AK_allocationtable_dump(1);
+    
+    if(!(AK_allocationtable_dump(1))) printf("Test succeeded!");
+    else printf("Test failed!");
     AK_EPI;
 }
-
